@@ -33,9 +33,10 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
   };
 
   const handleFeeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = parseFloat(e.target.value) || 0;
     onFeeChange({
       ...feeData,
-      [e.target.name]: parseFloat(e.target.value) || 0
+      [e.target.name]: newValue
     });
   };
 
@@ -134,6 +135,8 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
                 name="academicFee"
                 value={feeData.academicFee}
                 onChange={handleFeeChange}
+                min="0"
+                step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -146,6 +149,8 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
                 name="uniformFee"
                 value={feeData.uniformFee}
                 onChange={handleFeeChange}
+                min="0"
+                step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -158,6 +163,8 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
                 name="bookFee"
                 value={feeData.bookFee}
                 onChange={handleFeeChange}
+                min="0"
+                step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -170,6 +177,8 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
                 name="transportFee"
                 value={feeData.transportFee}
                 onChange={handleFeeChange}
+                min="0"
+                step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -182,6 +191,8 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
                 name="labFee"
                 value={feeData.labFee}
                 onChange={handleFeeChange}
+                min="0"
+                step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -194,6 +205,8 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
                 name="miscellaneousFee"
                 value={feeData.miscellaneousFee}
                 onChange={handleFeeChange}
+                min="0"
+                step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
