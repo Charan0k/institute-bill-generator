@@ -7,6 +7,16 @@ interface BillPreviewProps {
 }
 
 const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
+  // Original fee amounts
+  const originalFees = {
+    academicFee: 5000,
+    uniformFee: 1200,
+    bookFee: 800,
+    transportFee: 1500,
+    labFee: 600,
+    miscellaneousFee: 300
+  };
+
   const getCurrentDate = () => {
     return new Date().toLocaleDateString('en-US', {
       year: 'numeric',
@@ -21,30 +31,61 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
     switch (billType) {
       case '2-part':
         return [
-          { label: 'Academic Fee', amount: feeData.academicFee },
+          { 
+            label: 'Academic Fee', 
+            amount: feeData.academicFee,
+            originalAmount: originalFees.academicFee
+          },
           { 
             label: 'Other Charges (Uniform, Books, Transport, Lab, Misc.)', 
-            amount: feeData.uniformFee + feeData.bookFee + feeData.transportFee + feeData.labFee + feeData.miscellaneousFee 
+            amount: feeData.uniformFee + feeData.bookFee + feeData.transportFee + feeData.labFee + feeData.miscellaneousFee,
+            originalAmount: originalFees.uniformFee + originalFees.bookFee + originalFees.transportFee + originalFees.labFee + originalFees.miscellaneousFee
           }
         ];
       case '3-part':
         return [
-          { label: 'Academic Fee', amount: feeData.academicFee },
-          { label: 'Uniform Fee', amount: feeData.uniformFee },
+          { 
+            label: 'Academic Fee', 
+            amount: feeData.academicFee,
+            originalAmount: originalFees.academicFee
+          },
+          { 
+            label: 'Uniform Fee', 
+            amount: feeData.uniformFee,
+            originalAmount: originalFees.uniformFee
+          },
           { 
             label: 'Books & Other Charges', 
-            amount: feeData.bookFee + feeData.transportFee + feeData.labFee + feeData.miscellaneousFee 
+            amount: feeData.bookFee + feeData.transportFee + feeData.labFee + feeData.miscellaneousFee,
+            originalAmount: originalFees.bookFee + originalFees.transportFee + originalFees.labFee + originalFees.miscellaneousFee
           }
         ];
       case '5-part':
         return [
-          { label: 'Academic Fee', amount: feeData.academicFee },
-          { label: 'Uniform Fee', amount: feeData.uniformFee },
-          { label: 'Book Fee', amount: feeData.bookFee },
-          { label: 'Transport Fee', amount: feeData.transportFee },
+          { 
+            label: 'Academic Fee', 
+            amount: feeData.academicFee,
+            originalAmount: originalFees.academicFee
+          },
+          { 
+            label: 'Uniform Fee', 
+            amount: feeData.uniformFee,
+            originalAmount: originalFees.uniformFee
+          },
+          { 
+            label: 'Book Fee', 
+            amount: feeData.bookFee,
+            originalAmount: originalFees.bookFee
+          },
+          { 
+            label: 'Transport Fee', 
+            amount: feeData.transportFee,
+            originalAmount: originalFees.transportFee
+          },
           { 
             label: 'Lab & Miscellaneous Fee', 
-            amount: feeData.labFee + feeData.miscellaneousFee 
+            amount: feeData.labFee + feeData.miscellaneousFee,
+            originalAmount: originalFees.labFee + originalFees.miscellaneousFee
           }
         ];
       default:
@@ -54,6 +95,8 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
 
   const billItems = getBillItems();
   const totalAmount = billItems.reduce((sum, item) => sum + item.amount, 0);
+  const totalOriginalAmount = billItems.reduce((sum, item) => sum + item.originalAmount, 0);
+  const dueAmount = totalOriginalAmount - totalAmount;
 
   return (
     <div id="bill-to-print" className="bg-white border-2 border-gray-200 rounded-lg p-8 print:shadow-none print:border-none print:rounded-none print:p-6 print:m-0 print:w-full print:max-w-none">
@@ -97,6 +140,7 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
               <tr className="bg-blue-600 text-white print:bg-gray-800">
                 <th className="border border-gray-300 px-4 py-3 text-left print:px-3 print:py-2">Description</th>
                 <th className="border border-gray-300 px-4 py-3 text-right print:px-3 print:py-2">Amount ($)</th>
+                <th className="border border-gray-300 px-4 py-3 text-right print:px-3 print:py-2">Due Amount ($)</th>
               </tr>
             </thead>
             <tbody>
@@ -106,6 +150,9 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
                   <td className="border border-gray-300 px-4 py-3 text-right font-medium print:px-3 print:py-2">
                     ${item.amount.toFixed(2)}
                   </td>
+                  <td className="border border-gray-300 px-4 py-3 text-right font-medium print:px-3 print:py-2">
+                    ${(item.originalAmount - item.amount).toFixed(2)}
+                  </td>
                 </tr>
               ))}
               <tr className="bg-blue-50 font-semibold print:bg-gray-100">
@@ -113,11 +160,27 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
                 <td className="border border-gray-300 px-4 py-3 text-right text-lg print:px-3 print:py-2 print:text-base">
                   ${totalAmount.toFixed(2)}
                 </td>
+                <td className="border border-gray-300 px-4 py-3 text-right text-lg print:px-3 print:py-2 print:text-base">
+                  ${dueAmount.toFixed(2)}
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
+
+      {/* Payment Status */}
+      {dueAmount > 0 && (
+        <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6 print:mb-4 print:p-3 print:bg-gray-50 print:border-gray-400">
+          <h4 className="font-semibold text-red-800 mb-2 print:text-sm print:text-gray-900">Outstanding Balance</h4>
+          <p className="text-sm text-red-700 print:text-xs print:text-gray-700">
+            Total Outstanding Amount: <span className="font-bold">${dueAmount.toFixed(2)}</span>
+          </p>
+          <p className="text-sm text-red-700 print:text-xs print:text-gray-700">
+            This amount remains to be paid to complete the full fee payment.
+          </p>
+        </div>
+      )}
 
       {/* Payment Instructions */}
       <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 print:mb-4 print:p-3 print:bg-gray-50 print:border-gray-400">
@@ -127,6 +190,9 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
           <li>• Late payments may incur additional charges</li>
           <li>• Payment can be made online, by check, or in person at the office</li>
           <li>• Please include student name and roll number with payment</li>
+          {dueAmount > 0 && (
+            <li>• Outstanding balance of ${dueAmount.toFixed(2)} must be paid to avoid late fees</li>
+          )}
         </ul>
       </div>
 

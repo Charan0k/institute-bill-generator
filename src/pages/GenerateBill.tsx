@@ -71,15 +71,19 @@ const GenerateBill = () => {
                 .bg-gray-800 { background-color: #1f2937 !important; }
                 .bg-gray-100 { background-color: #f3f4f6 !important; }
                 .bg-yellow-50 { background-color: #fefce8 !important; }
+                .bg-red-50 { background-color: #fef2f2 !important; }
                 .text-white { color: white !important; }
                 .text-gray-600 { color: #4b5563 !important; }
                 .text-gray-700 { color: #374151 !important; }
                 .text-gray-900 { color: #111827 !important; }
+                .text-red-800 { color: #991b1b !important; }
+                .text-red-700 { color: #b91c1c !important; }
                 .border { border: 1px solid #d1d5db; }
                 .border-gray-300 { border-color: #d1d5db; }
                 .border-gray-400 { border-color: #9ca3af; }
                 .border-blue-600 { border-color: #2563eb; }
                 .border-yellow-400 { border-color: #fbbf24; }
+                .border-red-400 { border-color: #f87171; }
                 .border-l-4 { border-left-width: 4px; }
                 .border-b-2 { border-bottom-width: 2px; }
                 .border-t { border-top-width: 1px; }

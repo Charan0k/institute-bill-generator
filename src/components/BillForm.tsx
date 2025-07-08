@@ -18,6 +18,16 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
 
   const [showFeeSettings, setShowFeeSettings] = useState(false);
 
+  // Original fee amounts (cannot be exceeded)
+  const originalFees = {
+    academicFee: 5000,
+    uniformFee: 1200,
+    bookFee: 800,
+    transportFee: 1500,
+    labFee: 600,
+    miscellaneousFee: 300
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.name && formData.class && formData.rollNumber) {
@@ -34,9 +44,15 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
 
   const handleFeeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseFloat(e.target.value) || 0;
+    const fieldName = e.target.name as keyof FeeData;
+    const originalAmount = originalFees[fieldName];
+    
+    // Prevent increasing above original amount
+    const finalValue = Math.min(newValue, originalAmount);
+    
     onFeeChange({
       ...feeData,
-      [e.target.name]: newValue
+      [fieldName]: finalValue
     });
   };
 
@@ -125,10 +141,13 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
       {showFeeSettings && (
         <div className="space-y-4 bg-gray-50 p-4 rounded-lg animate-fade-in">
           <h3 className="text-lg font-medium text-gray-900">Fee Components</h3>
+          <p className="text-sm text-gray-600 mb-4">
+            Note: You can only decrease fees from the original amount, not increase them.
+          </p>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Academic Fee ($)
+                Academic Fee ($) - Max: ${originalFees.academicFee}
               </label>
               <input
                 type="number"
@@ -136,13 +155,14 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
                 value={feeData.academicFee}
                 onChange={handleFeeChange}
                 min="0"
+                max={originalFees.academicFee}
                 step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Uniform Fee ($)
+                Uniform Fee ($) - Max: ${originalFees.uniformFee}
               </label>
               <input
                 type="number"
@@ -150,13 +170,14 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
                 value={feeData.uniformFee}
                 onChange={handleFeeChange}
                 min="0"
+                max={originalFees.uniformFee}
                 step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Book Fee ($)
+                Book Fee ($) - Max: ${originalFees.bookFee}
               </label>
               <input
                 type="number"
@@ -164,13 +185,14 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
                 value={feeData.bookFee}
                 onChange={handleFeeChange}
                 min="0"
+                max={originalFees.bookFee}
                 step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Transport Fee ($)
+                Transport Fee ($) - Max: ${originalFees.transportFee}
               </label>
               <input
                 type="number"
@@ -178,13 +200,14 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
                 value={feeData.transportFee}
                 onChange={handleFeeChange}
                 min="0"
+                max={originalFees.transportFee}
                 step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Lab Fee ($)
+                Lab Fee ($) - Max: ${originalFees.labFee}
               </label>
               <input
                 type="number"
@@ -192,13 +215,14 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
                 value={feeData.labFee}
                 onChange={handleFeeChange}
                 min="0"
+                max={originalFees.labFee}
                 step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Miscellaneous ($)
+                Miscellaneous ($) - Max: ${originalFees.miscellaneousFee}
               </label>
               <input
                 type="number"
@@ -206,6 +230,7 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
                 value={feeData.miscellaneousFee}
                 onChange={handleFeeChange}
                 min="0"
+                max={originalFees.miscellaneousFee}
                 step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
