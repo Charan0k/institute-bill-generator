@@ -14,7 +14,7 @@ const Footer = () => {
                 <GraduationCap className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-bold">Excellence Education Institute</h3>
+                <h3 className="text-xl font-bold">Tagsol Education Institute</h3>
                 <p className="text-gray-400 text-sm">Professional Billing Solutions</p>
               </div>
             </div>
@@ -56,7 +56,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-blue-400" />
-                <span className="text-gray-400">billing@excellence-edu.com</span>
+                <span className="text-gray-400">billing@tagsol-edu.com</span>
               </li>
               <li className="flex items-start space-x-3">
                 <MapPin className="w-4 h-4 text-blue-400 mt-1" />
@@ -68,7 +68,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400">
-            © 2024 Excellence Education Institute. All rights reserved. | 
+            © 2024 Tagsol Education Institute. All rights reserved. | 
             <span className="text-blue-400"> Built with care for educational excellence</span>
           </p>
         </div>

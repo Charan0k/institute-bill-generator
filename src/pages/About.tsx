@@ -19,7 +19,7 @@ const About = () => {
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center animate-fade-in">
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            About Excellence Education Institute
+            About Tagsol Education Institute
           </h1>
           <p className="text-xl text-gray-600 mb-8">
             Committed to educational excellence and transparent billing solutions for over two decades
@@ -34,7 +34,7 @@ const About = () => {
             <div className="animate-fade-in">
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Mission</h2>
               <p className="text-lg text-gray-600 mb-6">
-                At Excellence Education Institute, we believe that transparency in education extends beyond 
+                At Tagsol Education Institute, we believe that transparency in education extends beyond 
                 the classroom. Our mission is to provide world-class education while maintaining complete 
                 transparency in our billing and administrative processes.
               </p>

@@ -26,7 +26,7 @@ const Header = () => {
               <GraduationCap className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Excellence Education</h1>
+              <h1 className="text-xl font-bold text-gray-900">Tagsol Education</h1>
               <p className="text-sm text-gray-600">Institute</p>
             </div>
           </Link>

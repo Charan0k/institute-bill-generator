@@ -59,7 +59,7 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
     <div className="bg-white border-2 border-gray-200 rounded-lg p-8 print:shadow-none print:border-none">
       {/* Header */}
       <div className="text-center mb-8 border-b-2 border-blue-600 pb-6">
-        <h1 className="text-3xl font-bold text-blue-600 mb-2">Excellence Education Institute</h1>
+        <h1 className="text-3xl font-bold text-blue-600 mb-2">Tagsol Education Institute</h1>
         <p className="text-gray-600">123 Education Street, Knowledge City, KC 12345</p>
         <p className="text-gray-600">Phone: +1 (555) 123-4567 | Email: billing@excellence-edu.com</p>
         <div className="mt-4">
@@ -133,7 +133,7 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
       {/* Footer */}
       <div className="text-center text-sm text-gray-600 border-t pt-4">
         <p>This is a computer-generated bill. For queries, contact the billing department.</p>
-        <p className="mt-2">Thank you for choosing Excellence Education Institute</p>
+        <p className="mt-2">Thank you for choosing Tagsol Education Institute</p>
       </div>
     </div>
   );
