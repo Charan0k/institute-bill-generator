@@ -10,7 +10,7 @@ export interface StudentData {
   name: string;
   class: string;
   rollNumber: string;
-  billType: '2-part' | '3-part' | '5-part';
+  billType: '2-part' | '3-part' | '5-part'; // Keep for compatibility but won't be used in form
 }
 
 export interface FeeData {

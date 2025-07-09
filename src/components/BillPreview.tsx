@@ -1,4 +1,6 @@
 
+import { useState } from 'react';
+import { Filter } from 'lucide-react';
 import { StudentData, FeeData } from '../pages/GenerateBill';
 
 interface BillPreviewProps {
@@ -7,6 +9,9 @@ interface BillPreviewProps {
 }
 
 const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
+  const [currentFilter, setCurrentFilter] = useState<'2-part' | '3-part' | '5-part'>('3-part');
+  const [showFilterDropdown, setShowFilterDropdown] = useState(false);
+
   // Original fee amounts
   const originalFees = {
     academicFee: 5000,
@@ -26,9 +31,7 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
   };
 
   const getBillItems = () => {
-    const { billType } = studentData;
-    
-    switch (billType) {
+    switch (currentFilter) {
       case '2-part':
         return [
           { 
@@ -98,6 +101,12 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
   const totalOriginalAmount = billItems.reduce((sum, item) => sum + item.originalAmount, 0);
   const dueAmount = totalOriginalAmount - totalAmount;
 
+  const filterOptions = [
+    { value: '2-part', label: '2-Part Bill (Academic + Others)' },
+    { value: '3-part', label: '3-Part Bill (Academic + Uniform + Books)' },
+    { value: '5-part', label: '5-Part Bill (All Components)' }
+  ];
+
   return (
     <div id="bill-to-print" className="bg-white border-2 border-gray-200 rounded-lg p-8 print:shadow-none print:border-none print:rounded-none print:p-6 print:m-0 print:w-full print:max-w-none">
       {/* Header */}
@@ -124,7 +133,7 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
         <div className="bg-gray-50 p-4 rounded-lg print:p-3">
           <h3 className="font-semibold text-gray-900 mb-3 print:mb-2">Bill Information</h3>
           <div className="space-y-2 print:space-y-1">
-            <p className="print:text-sm"><span className="font-medium">Bill Type:</span> {studentData.billType}</p>
+            <p className="print:text-sm"><span className="font-medium">Bill Type:</span> {currentFilter}</p>
             <p className="print:text-sm"><span className="font-medium">Issue Date:</span> {getCurrentDate()}</p>
             <p className="print:text-sm"><span className="font-medium">Due Date:</span> {new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()}</p>
           </div>
@@ -133,7 +142,43 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
 
       {/* Fee Details */}
       <div className="mb-8 print:mb-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 print:mb-3">Fee Breakdown</h3>
+        <div className="flex items-center justify-between mb-4 print:mb-3">
+          <h3 className="text-lg font-semibold text-gray-900">Fee Breakdown</h3>
+          
+          {/* Filter Button - Hidden in print */}
+          <div className="relative print:hidden">
+            <button
+              onClick={() => setShowFilterDropdown(!showFilterDropdown)}
+              className="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-300 border border-gray-300"
+            >
+              <Filter className="w-4 h-4 mr-2" />
+              <span className="text-sm font-medium">Filter: {currentFilter}</span>
+            </button>
+            
+            {/* Filter Dropdown */}
+            {showFilterDropdown && (
+              <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+                <div className="py-2">
+                  {filterOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      onClick={() => {
+                        setCurrentFilter(option.value as '2-part' | '3-part' | '5-part');
+                        setShowFilterDropdown(false);
+                      }}
+                      className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors duration-200 ${
+                        currentFilter === option.value ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        
         <div className="overflow-x-auto">
           <table className="w-full border-collapse border border-gray-300 print:text-sm">
             <thead>

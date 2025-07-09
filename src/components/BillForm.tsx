@@ -13,7 +13,7 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
     name: '',
     class: '',
     rollNumber: '',
-    billType: '3-part'
+    billType: '3-part' // Default value, will be controlled by filter
   });
 
   const [showFeeSettings, setShowFeeSettings] = useState(false);
@@ -35,7 +35,7 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -106,23 +106,6 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
             placeholder="Enter roll number"
             required
           />
-        </div>
-
-        <div>
-          <label htmlFor="billType" className="block text-sm font-medium text-gray-700 mb-2">
-            Bill Format
-          </label>
-          <select
-            id="billType"
-            name="billType"
-            value={formData.billType}
-            onChange={handleInputChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
-          >
-            <option value="2-part">2-Part Bill (Academic + Others)</option>
-            <option value="3-part">3-Part Bill (Academic + Uniform + Books)</option>
-            <option value="5-part">5-Part Bill (All Components)</option>
-          </select>
         </div>
       </div>
 
