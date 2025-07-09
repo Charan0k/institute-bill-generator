@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { StudentData, FeeData } from '../pages/GenerateBill';
 
@@ -13,7 +12,7 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
     name: '',
     class: '',
     rollNumber: '',
-    billType: '3-part' // Default value, will be controlled by filter
+    billType: 'basic-package' // Default value
   });
 
   const [showFeeSettings, setShowFeeSettings] = useState(false);
@@ -25,7 +24,9 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
     bookFee: 800,
     transportFee: 1500,
     labFee: 600,
-    miscellaneousFee: 300
+    miscellaneousFee: 300,
+    hostelFee: 2500,
+    messFee: 1800
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -214,6 +215,36 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
                 onChange={handleFeeChange}
                 min="0"
                 max={originalFees.miscellaneousFee}
+                step="0.01"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Hostel Fee ($) - Max: ${originalFees.hostelFee}
+              </label>
+              <input
+                type="number"
+                name="hostelFee"
+                value={feeData.hostelFee}
+                onChange={handleFeeChange}
+                min="0"
+                max={originalFees.hostelFee}
+                step="0.01"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Mess Fee ($) - Max: ${originalFees.messFee}
+              </label>
+              <input
+                type="number"
+                name="messFee"
+                value={feeData.messFee}
+                onChange={handleFeeChange}
+                min="0"
+                max={originalFees.messFee}
                 step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />

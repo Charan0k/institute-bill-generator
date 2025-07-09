@@ -10,7 +10,7 @@ export interface StudentData {
   name: string;
   class: string;
   rollNumber: string;
-  billType: '2-part' | '3-part' | '5-part'; // Keep for compatibility but won't be used in form
+  billType: 'academic-only' | 'basic-package' | 'full-package'; // Updated filter types
 }
 
 export interface FeeData {
@@ -20,6 +20,8 @@ export interface FeeData {
   transportFee: number;
   labFee: number;
   miscellaneousFee: number;
+  hostelFee: number; // New fee component
+  messFee: number; // New fee component
 }
 
 const GenerateBill = () => {
@@ -30,7 +32,9 @@ const GenerateBill = () => {
     bookFee: 800,
     transportFee: 1500,
     labFee: 600,
-    miscellaneousFee: 300
+    miscellaneousFee: 300,
+    hostelFee: 2500, // New fee component
+    messFee: 1800 // New fee component
   });
 
   const handleFormSubmit = (data: StudentData) => {
