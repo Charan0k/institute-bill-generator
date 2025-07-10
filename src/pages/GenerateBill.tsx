@@ -10,7 +10,7 @@ export interface StudentData {
   name: string;
   class: string;
   rollNumber: string;
-  billType: 'academic-only' | 'basic-package' | 'full-package'; // Updated filter types
+  billType: 'academic-only' | 'basic-package' | 'full-package';
 }
 
 export interface FeeData {
@@ -20,21 +20,21 @@ export interface FeeData {
   transportFee: number;
   labFee: number;
   miscellaneousFee: number;
-  hostelFee: number; // New fee component
-  messFee: number; // New fee component
+  hostelFee: number;
+  messFee: number;
 }
 
 const GenerateBill = () => {
   const [studentData, setStudentData] = useState<StudentData | null>(null);
   const [feeData, setFeeData] = useState<FeeData>({
-    academicFee: 5000,
-    uniformFee: 1200,
-    bookFee: 800,
-    transportFee: 1500,
-    labFee: 600,
-    miscellaneousFee: 300,
-    hostelFee: 2500, // New fee component
-    messFee: 1800 // New fee component
+    academicFee: 4000,
+    uniformFee: 1000,
+    bookFee: 600,
+    transportFee: 1200,
+    labFee: 200,
+    miscellaneousFee: 250,
+    hostelFee: 2100,
+    messFee: 1400
   });
 
   const handleFormSubmit = (data: StudentData) => {
