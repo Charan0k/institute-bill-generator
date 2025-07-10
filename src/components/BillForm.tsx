@@ -17,8 +17,6 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
     billType: 'basic-package'
   });
 
-  const [showFeeSettings, setShowFeeSettings] = useState(false);
-
   // Class options in proper order
   const classOptions = [
     'Nursery',
@@ -208,36 +206,6 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
     });
   };
 
-  // Get original fees for the current class
-  const getOriginalFees = () => {
-    return formData.class ? getClassBasedFees(formData.class) : {
-      academicFee: 5000,
-      uniformFee: 1200,
-      bookFee: 800,
-      transportFee: 1500,
-      labFee: 600,
-      miscellaneousFee: 300,
-      hostelFee: 2500,
-      messFee: 1800
-    };
-  };
-
-  const originalFees = getOriginalFees();
-
-  const handleFeeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = parseFloat(e.target.value) || 0;
-    const fieldName = e.target.name as keyof FeeData;
-    const originalAmount = originalFees[fieldName];
-    
-    // Prevent increasing above original amount
-    const finalValue = Math.min(newValue, originalAmount);
-    
-    onFeeChange({
-      ...feeData,
-      [fieldName]: finalValue
-    });
-  };
-
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Student Information */}
@@ -292,154 +260,6 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
           />
         </div>
       </div>
-
-      {/* Fee Settings Toggle */}
-      <div className="border-t pt-6">
-        <button
-          type="button"
-          onClick={() => setShowFeeSettings(!showFeeSettings)}
-          className="text-blue-600 hover:text-blue-700 font-medium transition-colors duration-300"
-        >
-          {showFeeSettings ? 'Hide' : 'Show'} Fee Settings
-        </button>
-      </div>
-
-      {/* Fee Settings */}
-      {showFeeSettings && (
-        <div className="space-y-4 bg-gray-50 p-4 rounded-lg animate-fade-in">
-          <h3 className="text-lg font-medium text-gray-900">Fee Components</h3>
-          <p className="text-sm text-gray-600 mb-4">
-            Note: You can only decrease fees from the original amount, not increase them.
-            {formData.class && (
-              <span className="block mt-1 font-medium text-blue-600">
-                Fee structure for {formData.class}
-              </span>
-            )}
-          </p>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Academic Fee ($) - Max: ${originalFees.academicFee}
-              </label>
-              <input
-                type="number"
-                name="academicFee"
-                value={feeData.academicFee}
-                onChange={handleFeeChange}
-                min="0"
-                max={originalFees.academicFee}
-                step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Uniform Fee ($) - Max: ${originalFees.uniformFee}
-              </label>
-              <input
-                type="number"
-                name="uniformFee"
-                value={feeData.uniformFee}
-                onChange={handleFeeChange}
-                min="0"
-                max={originalFees.uniformFee}
-                step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Book Fee ($) - Max: ${originalFees.bookFee}
-              </label>
-              <input
-                type="number"
-                name="bookFee"
-                value={feeData.bookFee}
-                onChange={handleFeeChange}
-                min="0"
-                max={originalFees.bookFee}
-                step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Transport Fee ($) - Max: ${originalFees.transportFee}
-              </label>
-              <input
-                type="number"
-                name="transportFee"
-                value={feeData.transportFee}
-                onChange={handleFeeChange}
-                min="0"
-                max={originalFees.transportFee}
-                step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Lab Fee ($) - Max: ${originalFees.labFee}
-              </label>
-              <input
-                type="number"
-                name="labFee"
-                value={feeData.labFee}
-                onChange={handleFeeChange}
-                min="0"
-                max={originalFees.labFee}
-                step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Miscellaneous ($) - Max: ${originalFees.miscellaneousFee}
-              </label>
-              <input
-                type="number"
-                name="miscellaneousFee"
-                value={feeData.miscellaneousFee}
-                onChange={handleFeeChange}
-                min="0"
-                max={originalFees.miscellaneousFee}
-                step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Hostel Fee ($) - Max: ${originalFees.hostelFee}
-              </label>
-              <input
-                type="number"
-                name="hostelFee"
-                value={feeData.hostelFee}
-                onChange={handleFeeChange}
-                min="0"
-                max={originalFees.hostelFee}
-                step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Mess Fee ($) - Max: ${originalFees.messFee}
-              </label>
-              <input
-                type="number"
-                name="messFee"
-                value={feeData.messFee}
-                onChange={handleFeeChange}
-                min="0"
-                max={originalFees.messFee}
-                step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-          </div>
-        </div>
-      )}
 
       <button
         type="submit"
