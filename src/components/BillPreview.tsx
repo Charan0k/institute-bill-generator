@@ -21,8 +21,13 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
         <PreviewSelector previewMode={previewMode} onPreviewModeChange={setPreviewMode} />
       </div>
 
-      {/* A4 Sheet Container */}
-      <div className="bg-white shadow-lg mx-auto" style={{ width: '210mm', minHeight: '297mm', padding: '10mm' }}>
+      {/* A4 Sheet Container - Responsive */}
+      <div className="bg-white shadow-lg mx-auto max-w-full overflow-hidden" style={{ 
+        width: 'min(100%, 210mm)', 
+        minHeight: 'min(297mm, 80vh)', 
+        padding: '10mm',
+        aspectRatio: '210/297'
+      }}>
         <div className={`grid gap-4 h-full ${getGridClass(previewMode)}`}>
           {Array.from({ length: previewMode }, (_, index) => (
             <BillCopy 
