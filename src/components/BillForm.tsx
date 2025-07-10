@@ -253,7 +253,7 @@ const BillForm = ({ onSubmit, feeData, onFeeChange }: BillFormProps) => {
             value={formData.name}
             onChange={handleNameChange}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
-            placeholder="Enter student's full name (letters only)"
+            placeholder="Enter student's name "
             required
           />
         </div>
