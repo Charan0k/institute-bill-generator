@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { StudentData, FeeData } from '../pages/GenerateBill';
 import BillCopy from './BillCopy';
@@ -23,14 +22,13 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
       </div>
 
       {/* A4 Sheet Container with Scroll */}
-      <ScrollArea className="h-[80vh] w-full">
+      <ScrollArea className={`w-full ${previewMode > 3 ? 'h-[90vh]' : 'h-[80vh]'}`}>
         <div className="bg-white shadow-lg mx-auto max-w-full overflow-hidden" style={{ 
           width: 'min(100%, 210mm)', 
-          minHeight: previewMode > 3 ? '420mm' : '297mm',
-          padding: '10mm',
-          aspectRatio: previewMode > 3 ? '210/420' : '210/297'
+          minHeight: previewMode > 3 ? '600mm' : '297mm',
+          padding: '10mm'
         }}>
-          <div className={`grid gap-4 h-full ${getGridClass(previewMode)}`}>
+          <div className={`grid h-full ${getGridClass(previewMode)} ${previewMode > 4 ? 'gap-6' : 'gap-4'}`}>
             {Array.from({ length: previewMode }, (_, index) => (
               <BillCopy 
                 key={index} 
