@@ -17,7 +17,7 @@ const BillPreview = ({ studentData, feeData, previewMode }: BillPreviewProps) =>
       <ScrollArea className="w-full h-[90vh]">
         <div className="bill-preview-content bg-white shadow-lg mx-auto max-w-full overflow-hidden" style={{ 
           width: 'min(100%, 210mm)', 
-          minHeight: previewMode === 6 ? '890mm' : previewMode === 4 ? '594mm' : '297mm',
+          minHeight: previewMode === 6 ? '297mm' : previewMode === 4 ? '297mm' : '297mm',
           padding: '10mm'
         }}>
           <div className={`grid h-full ${getGridClass(previewMode)}`}>
