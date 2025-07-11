@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import BillForm from '../components/BillForm';
 import BillPreview from '../components/BillPreview';
+import PreviewSelector from '../components/PreviewSelector';
 
 export interface StudentData {
   name: string;
@@ -26,6 +27,7 @@ export interface FeeData {
 
 const GenerateBill = () => {
   const [studentData, setStudentData] = useState<StudentData | null>(null);
+  const [previewMode, setPreviewMode] = useState<1 | 2 | 4 | 6>(1);
   const [feeData, setFeeData] = useState<FeeData>({
     academicFee: 4000,
     uniformFee: 1000,
@@ -42,7 +44,7 @@ const GenerateBill = () => {
   };
 
   const handlePrint = () => {
-    const printContent = document.getElementById('bill-to-print');
+    const printContent = document.querySelector('.bill-preview-content');
     if (printContent) {
       const printWindow = window.open('', '_blank');
       if (printWindow) {
@@ -121,10 +123,20 @@ const GenerateBill = () => {
                 .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
                 .space-y-1 > * + * { margin-top: 0.25rem; }
                 .grid { display: grid; }
+                .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
                 .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+                .grid-rows-2 { grid-template-rows: repeat(2, 1fr); }
+                .grid-rows-3 { grid-template-rows: repeat(3, 1fr); }
                 .gap-4 { gap: 1rem; }
+                .gap-6 { gap: 1.5rem; }
                 .rounded-lg { border-radius: 0.5rem; }
                 .overflow-x-auto { overflow-x: auto; }
+                .transform { transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)); }
+                .scale-90 { --tw-scale-x: 0.9; --tw-scale-y: 0.9; }
+                .scale-75 { --tw-scale-x: 0.75; --tw-scale-y: 0.75; }
+                .scale-45 { --tw-scale-x: 0.45; --tw-scale-y: 0.45; }
+                .scale-30 { --tw-scale-x: 0.3; --tw-scale-y: 0.3; }
+                .origin-top-left { transform-origin: top left; }
               </style>
             </head>
             <body>
@@ -148,7 +160,7 @@ const GenerateBill = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 print:bg-white">
       <Header />
       
-      <div className="max-w-6xl mx-auto px-4 py-8 print:hidden">
+      <div className="max-w-4xl mx-auto px-4 py-8 print:hidden">
         <div className="text-center mb-8 animate-fade-in">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Generate Student Bill
@@ -158,7 +170,7 @@ const GenerateBill = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="space-y-8">
           {/* Form Section */}
           <div className="bg-white rounded-xl shadow-lg p-6 animate-fade-in">
             <div className="flex items-center mb-6">
@@ -173,7 +185,8 @@ const GenerateBill = () => {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-900">Bill Preview</h2>
               {studentData && (
-                <div className="flex space-x-2">
+                <div className="flex items-center space-x-2">
+                  <PreviewSelector previewMode={previewMode} onPreviewModeChange={setPreviewMode} />
                   <button
                     onClick={handlePrint}
                     className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300"
@@ -193,7 +206,7 @@ const GenerateBill = () => {
             </div>
             
             {studentData ? (
-              <BillPreview studentData={studentData} feeData={feeData} />
+              <BillPreview studentData={studentData} feeData={feeData} previewMode={previewMode} />
             ) : (
               <div className="text-center py-12 text-gray-500">
                 <FileText className="w-16 h-16 mx-auto mb-4 opacity-50" />

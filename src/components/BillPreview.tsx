@@ -1,34 +1,26 @@
-import { useState } from 'react';
+
 import { StudentData, FeeData } from '../pages/GenerateBill';
 import BillCopy from './BillCopy';
-import PreviewSelector from './PreviewSelector';
 import { getGridClass, getScaleClass } from '../utils/previewUtils';
 import { ScrollArea } from './ui/scroll-area';
 
 interface BillPreviewProps {
   studentData: StudentData;
   feeData: FeeData;
+  previewMode: 1 | 2 | 4 | 6;
 }
 
-const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
-  const [previewMode, setPreviewMode] = useState<1 | 2 | 3 | 4 | 5 | 6>(1);
-
+const BillPreview = ({ studentData, feeData, previewMode }: BillPreviewProps) => {
   return (
     <div className="bg-white border-2 border-gray-200 rounded-lg p-6 print:shadow-none print:border-none print:rounded-none print:p-6 print:m-0 print:w-full print:max-w-none">
-      {/* Preview Filter - Hidden in print */}
-      <div className="flex items-center justify-between mb-6 print:hidden">
-        <h3 className="text-lg font-semibold text-gray-900">Bill Preview</h3>
-        <PreviewSelector previewMode={previewMode} onPreviewModeChange={setPreviewMode} />
-      </div>
-
       {/* A4 Sheet Container with Scroll */}
-      <ScrollArea className={`w-full ${previewMode > 3 ? 'h-[90vh]' : 'h-[80vh]'}`}>
-        <div className="bg-white shadow-lg mx-auto max-w-full overflow-hidden" style={{ 
+      <ScrollArea className={`w-full ${previewMode > 2 ? 'h-[90vh]' : 'h-[80vh]'}`}>
+        <div className="bill-preview-content bg-white shadow-lg mx-auto max-w-full overflow-hidden" style={{ 
           width: 'min(100%, 210mm)', 
-          minHeight: previewMode > 3 ? '600mm' : '297mm',
+          minHeight: previewMode > 2 ? '600mm' : '297mm',
           padding: '10mm'
         }}>
-          <div className={`grid h-full ${getGridClass(previewMode)} ${previewMode > 4 ? 'gap-6' : 'gap-4'}`}>
+          <div className={`grid h-full ${getGridClass(previewMode)} ${previewMode > 2 ? 'gap-6' : 'gap-4'}`}>
             {Array.from({ length: previewMode }, (_, index) => (
               <BillCopy 
                 key={index} 
