@@ -27,7 +27,7 @@ export interface FeeData {
 
 const GenerateBill = () => {
   const [studentData, setStudentData] = useState<StudentData | null>(null);
-  const [previewMode, setPreviewMode] = useState<1 | 2 | 4 | 6>(1);
+  const [previewMode, setPreviewMode] = useState<2 | 4 | 6>(2);
   const [feeData, setFeeData] = useState<FeeData>({
     academicFee: 4000,
     uniformFee: 1000,
@@ -160,7 +160,7 @@ const GenerateBill = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 print:bg-white">
       <Header />
       
-      <div className="max-w-4xl mx-auto px-4 py-8 print:hidden">
+      <div className="max-w-6xl mx-auto px-4 py-8 print:hidden">
         <div className="text-center mb-8 animate-fade-in">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Generate Student Bill
@@ -172,7 +172,7 @@ const GenerateBill = () => {
 
         <div className="space-y-8">
           {/* Form Section */}
-          <div className="bg-white rounded-xl shadow-lg p-6 animate-fade-in">
+          <div className="bg-white rounded-xl shadow-lg p-6 animate-fade-in max-w-2xl mx-auto">
             <div className="flex items-center mb-6">
               <FileText className="w-6 h-6 text-blue-600 mr-2" />
               <h2 className="text-2xl font-bold text-gray-900">Student Information</h2>

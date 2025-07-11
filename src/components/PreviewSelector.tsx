@@ -3,22 +3,21 @@ import { useState } from 'react';
 import { Filter } from 'lucide-react';
 
 interface PreviewSelectorProps {
-  previewMode: 1 | 2 | 4 | 6;
-  onPreviewModeChange: (mode: 1 | 2 | 4 | 6) => void;
+  previewMode: 2 | 4 | 6;
+  onPreviewModeChange: (mode: 2 | 4 | 6) => void;
 }
 
 const PreviewSelector = ({ previewMode, onPreviewModeChange }: PreviewSelectorProps) => {
   const [showPreviewDropdown, setShowPreviewDropdown] = useState(false);
 
   const previewOptions = [
-    { value: 1, label: 'Preview: 1 Copy' },
     { value: 2, label: 'Preview: 2 Copies' },
     { value: 4, label: 'Preview: 4 Copies' },
     { value: 6, label: 'Preview: 6 Copies' }
   ];
 
   const getPreviewDisplayName = (mode: number) => {
-    return `Preview: ${mode} ${mode === 1 ? 'Copy' : 'Copies'}`;
+    return `Preview: ${mode} Copies`;
   };
 
   return (
@@ -39,7 +38,7 @@ const PreviewSelector = ({ previewMode, onPreviewModeChange }: PreviewSelectorPr
               <button
                 key={option.value}
                 onClick={() => {
-                  onPreviewModeChange(option.value as 1 | 2 | 4 | 6);
+                  onPreviewModeChange(option.value as 2 | 4 | 6);
                   setShowPreviewDropdown(false);
                 }}
                 className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 transition-colors duration-200 ${
