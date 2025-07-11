@@ -4,6 +4,7 @@ import { StudentData, FeeData } from '../pages/GenerateBill';
 import BillCopy from './BillCopy';
 import PreviewSelector from './PreviewSelector';
 import { getGridClass, getScaleClass } from '../utils/previewUtils';
+import { ScrollArea } from './ui/scroll-area';
 
 interface BillPreviewProps {
   studentData: StudentData;
@@ -21,24 +22,26 @@ const BillPreview = ({ studentData, feeData }: BillPreviewProps) => {
         <PreviewSelector previewMode={previewMode} onPreviewModeChange={setPreviewMode} />
       </div>
 
-      {/* A4 Sheet Container - Responsive */}
-      <div className="bg-white shadow-lg mx-auto max-w-full overflow-hidden" style={{ 
-        width: 'min(100%, 210mm)', 
-        minHeight: 'min(297mm, 80vh)', 
-        padding: '10mm',
-        aspectRatio: '210/297'
-      }}>
-        <div className={`grid gap-4 h-full ${getGridClass(previewMode)}`}>
-          {Array.from({ length: previewMode }, (_, index) => (
-            <BillCopy 
-              key={index} 
-              studentData={studentData} 
-              feeData={feeData} 
-              scaleClass={getScaleClass(previewMode)}
-            />
-          ))}
+      {/* A4 Sheet Container with Scroll */}
+      <ScrollArea className="h-[80vh] w-full">
+        <div className="bg-white shadow-lg mx-auto max-w-full overflow-hidden" style={{ 
+          width: 'min(100%, 210mm)', 
+          minHeight: previewMode > 3 ? '420mm' : '297mm',
+          padding: '10mm',
+          aspectRatio: previewMode > 3 ? '210/420' : '210/297'
+        }}>
+          <div className={`grid gap-4 h-full ${getGridClass(previewMode)}`}>
+            {Array.from({ length: previewMode }, (_, index) => (
+              <BillCopy 
+                key={index} 
+                studentData={studentData} 
+                feeData={feeData} 
+                scaleClass={getScaleClass(previewMode)}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      </ScrollArea>
     </div>
   );
 };
