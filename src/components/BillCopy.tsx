@@ -104,8 +104,8 @@ const BillCopy = ({ studentData, feeData, scaleClass }: BillCopyProps) => {
 
       {/* Footer */}
       <div className="text-center text-xs text-gray-600 border-t pt-2 print:pt-3 print:text-xs mt-auto">
-        <p>This is a computer-generated bill. For queries, contact the billing department.</p>
-        <p className="mt-1 print:mt-1">Thank you for choosing Tagsol Education Institute</p>
+        {/* <p>This is a computer-generated bill. For queries, contact the billing department.</p>
+        <p className="mt-1 print:mt-1">Thank you for choosing Tagsol Education Institute</p> */}
       </div>
     </div>
   );
