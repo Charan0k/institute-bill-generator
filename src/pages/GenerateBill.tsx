@@ -1,6 +1,9 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import { FileText, Download, Printer } from 'lucide-react';
+
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import BillForm from '../components/BillForm';
@@ -38,6 +41,47 @@ const GenerateBill = () => {
     hostelFee: 2100,
     messFee: 1400
   });
+
+  const [selectedClass, setSelectedClass] = useState("class3");
+  const [students, setStudents] = useState<any[]>([]);
+  const [selectedStudentId, setSelectedStudentId] = useState<number | null>(null);
+
+    useEffect(() => {
+    axios.get(`http://localhost:3001/students/${selectedClass}`)
+      .then(res => setStudents(res.data))
+      .catch(err => console.error("Error fetching students:", err));
+  }, [selectedClass]);
+
+    useEffect(() => {
+    const selected = students.find(s => s.id === selectedStudentId);
+    if (selected) {
+      setStudentData({
+        name: selected.name,
+        class: selectedClass,
+        rollNumber: selected.roll_no.toString(),
+        billType: 'full-package' // default bill type
+      });
+
+      const fixedBookFee = 400;
+      const fixedUniformFee = 600;
+      const fixedTransportFee = 1000;
+      const academicPortion = selected.fees - (fixedBookFee + fixedUniformFee + fixedTransportFee);
+
+      setFeeData({
+        academicFee: academicPortion > 0 ? academicPortion : 0,
+        bookFee: fixedBookFee,
+        uniformFee: fixedUniformFee,
+        transportFee: fixedTransportFee,
+        labFee: 0,
+        miscellaneousFee: 0,
+        hostelFee: 0,
+        messFee: 0
+      });
+
+    }
+  }, [selectedStudentId, students]);
+
+
 
   const handleFormSubmit = (data: StudentData) => {
     setStudentData(data);
@@ -156,6 +200,7 @@ const GenerateBill = () => {
     handlePrint();
   };
 
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 print:bg-white">
       <Header />
@@ -177,7 +222,36 @@ const GenerateBill = () => {
               <FileText className="w-6 h-6 text-blue-600 mr-2" />
               <h2 className="text-2xl font-bold text-gray-900">Student Information</h2>
             </div>
-            <BillForm onSubmit={handleFormSubmit} feeData={feeData} onFeeChange={setFeeData} />
+              <div className="space-y-4">
+                <div>
+                  <label className="block mb-1 font-medium">Select Class</label>
+                  <select
+                    value={selectedClass}
+                    onChange={(e) => setSelectedClass(e.target.value)}
+                    className="w-full border p-2 rounded"
+                  >
+                    {["nursery", "lkg", "ukg", ...Array.from({ length: 10 }, (_, i) => `class${i + 1}`)].map(cls => (
+                      <option key={cls} value={cls}>{cls.toUpperCase()}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block mb-1 font-medium">Select Student</label>
+                  <select
+                    value={selectedStudentId ?? ''}
+                    onChange={(e) => setSelectedStudentId(Number(e.target.value))}
+                    className="w-full border p-2 rounded"
+                  >
+                    <option value="" disabled>Select student</option>
+                    {students.map(student => (
+                      <option key={student.id} value={student.id}>
+                        {student.name} (Roll No: {student.roll_no})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
           </div>
 
           {/* Preview Section */}

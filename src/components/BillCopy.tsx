@@ -79,7 +79,7 @@ const BillCopy = ({ studentData, feeData, scaleClass }: BillCopyProps) => {
             <thead>
               <tr className="bg-blue-600 text-white print:bg-gray-800">
                 <th className="border border-gray-300 px-2 py-1 text-left print:px-3 print:py-2">Description</th>
-                <th className="border border-gray-300 px-2 py-1 text-right print:px-3 print:py-2">Amount ($)</th>
+                <th className="border border-gray-300 px-2 py-1 text-right print:px-3 print:py-2">Amount (₹)</th>
               </tr>
             </thead>
             <tbody>
@@ -87,14 +87,15 @@ const BillCopy = ({ studentData, feeData, scaleClass }: BillCopyProps) => {
                 <tr key={index} className="hover:bg-gray-50 print:hover:bg-transparent">
                   <td className="border border-gray-300 px-2 py-1 print:px-3 print:py-2">{item.label}</td>
                   <td className="border border-gray-300 px-2 py-1 text-right font-medium print:px-3 print:py-2">
-                    ${item.amount.toFixed(2)}
+                    ₹{item.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+
                   </td>
                 </tr>
               ))}
               <tr className="bg-blue-50 font-semibold print:bg-gray-100">
                 <td className="border border-gray-300 px-2 py-1 print:px-3 print:py-2">Total Amount</td>
                 <td className="border border-gray-300 px-2 py-1 text-right text-sm print:px-3 print:py-2 print:text-base">
-                  ${totalAmount.toFixed(2)}
+                  ₹{totalAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                 </td>
               </tr>
             </tbody>
