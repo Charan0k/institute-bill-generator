@@ -42,7 +42,7 @@ const GenerateBill = () => {
     messFee: 1400
   });
 
-  const [selectedClass, setSelectedClass] = useState("class3");
+  const [selectedClass, setSelectedClass] = useState("nursery");
   const [students, setStudents] = useState<any[]>([]);
   const [selectedStudentId, setSelectedStudentId] = useState<number | null>(null);
 
